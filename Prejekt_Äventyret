@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Äventyret</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #222323;
+        }
+
+        #container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #8ca195;
+            border-radius: 5px;
+        
+        }
+
+        #output {
+            margin-bottom: 10px;
+            padding: 20px;
+            background-color: #fdfcfc;
+            border: 5px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+
+        #input {
+            width: calc(100% - 25px);
+            padding: 8px;
+            border: 5px solid #f6efef;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #515254;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="output">
+            
+        </div>
+        <input type="text" id="input">
+        <button onclick="sendMessage()">Skicka meddelande</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let inputElement = document.getElementById('input');
+            let outputElement = document.getElementById('output');
+            let message = inputElement.value;
+
+            outputElement.textContent += '\n' + message;
+ 
+            inputElement.value = '';
+        }
+    </script>
+</body>
+</html>
