@@ -8,7 +8,10 @@
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
-            background-color: #222323;
+            
+            background-image: url('linus-sandvide-5DIFvVwe6wk-unsplash.jpg');
+            background-size: cover;
+            background-color: #f2ffff;
         }
 
         #container {
@@ -16,9 +19,9 @@
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #8ca195;
+            background-color: #2e0e0e;
             border-radius: 5px;
-        
+            opacity: 0.5;
         }
 
         #output {
@@ -46,8 +49,7 @@
             border-radius: 5px;
             color: #fff;
             cursor: pointer;
-            font-size: 16px;
-            
+            font-size: 16px;   
         }
 
         button:hover {
@@ -55,25 +57,78 @@
         }
     </style>
 </head>
-<body>
-    <div id="container">
-        <div id="output">
-            
+    <body>
+        <div id="container">
+        <div id="output"></div>
+        <input type="text" id="input"placeholder="Skriv 'startgame' för att börja ditt äventyr..."oninput="removePlaceholder()">   
+        <button id="button">Skicka meddelande</button>
         </div>
-        <input type="text" id="input">
-        <button onclick="sendMessage()">Skicka meddelande</button>
-    </div>
+        <script>
+            document.getElementById("button").onclick=sendMessage;
+            // GLOBALER //
+            gameLocation = ''; // lägg till denna funktion med ex (message === 'exploreCaveEntrence' && gameLocation = xxx) 
+            
+            function clearOutput (){
+                document.getElementById('output').innerHTML = '';
+            }
 
-    <script>
-        function sendMessage() {
+            // SPELET //
+            function startGame() {
+                print ('Welcome adventurer!');
+                newLine();
+                print ('You have been wandering for hours after finnishing your last class at Chasacademy...');
+                newLine();
+                print ('When you suddenly realize you are standing infront of a large cave..');
+                newLine()
+                print ('Do you dare to enter? Type "enter" if you want to continue the journey! ');
+            }
+
+            function exploreCaveEntrence() {
+                clearOutput ();
+                print ('You cautiously enter the cave...');
+                newLine ();
+                print ('As you venture deeper, everything becomes darker..');
+                newLine ();
+                print ('You which you had a torch, but then you realise you live in 2024 and turn on the flashlight on your phone.');
+                newLine ();
+                print ('With the light turned on you, you see a pathway infront of you..');
+                newLine ();
+                print ('Do you go "left" or "right');
+       
+            }
+
+
+            // FUNKTIONER INPUT/OUTPUT //
+            function sendMessage() {
             let inputElement = document.getElementById('input');
             let outputElement = document.getElementById('output');
             let message = inputElement.value;
-
-            outputElement.textContent += '\n' + message;
- 
             inputElement.value = '';
-        }
-    </script>
-</body>
+            if (message === 'startgame') {
+                startGame();
+            } if (message === 'enter') {
+                exploreCaveEntrence();
+            }
+        
+            }
+
+             // VERKTYG //
+            function removePlaceholder() {
+            inputElement = document.getElementById('input');
+            inputElement.removeAttribute('placeholder');
+            }
+        
+            function print(text){
+                OUTPUT = document.getElementById('output');
+                OUTPUT.innerHTML += text;
+            }
+
+            function newLine(){
+                OUTPUT = document.getElementById('output');
+                OUTPUT.innerHTML += "<br>";
+            }
+
+
+        </script>
+    </body>
 </html>
