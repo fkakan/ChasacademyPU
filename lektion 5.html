@@ -1,0 +1,89 @@
+<head>
+    <style>
+        button {
+            padding: 15px 20px;
+            background-color: #5f6167;
+            margin-top: 10px;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+    <input id="input1">
+    <input id="input2">
+    <button id="button_add">+</button>
+    <button id="button_subtract" value="substract">-</button>
+    <button id="button_divide">/</button>
+    <button id="button_multiply">*</button>
+    <button id="button_empty">Empty</button>
+    <div id="output_chat" style="border: 1px solid"></div>
+    <div id="output" style="border: 1px solid rgb(38, 39, 38)"></div>
+    
+    <script>
+        // GLOBALER //
+        OUTPUT = document.getElementById("output");
+        BUTTON_ADD = document.getElementById("button_add");
+        BUTTON_MULTIPLY = document.getElementById("button_multiply");
+        BUTTON_DIVIDE = document.getElementById("button_divide");
+        BUTTON_SUBTRACT = document.getElementById("button_subtract");
+        BUTTON_EMPTY = document.getElementById("button_empty");
+        
+        // KNAPPARNAS FUNKTIONALITET //
+        BUTTON_ADD.onclick = function (){
+            input1 = Number(document.getElementById("input1").value);
+            input2 = Number(document.getElementById("input2").value);
+            calculate(input1,input2,"add")
+        }
+        BUTTON_MULTIPLY.onclick = function (){
+            input1 = Number(document.getElementById("input1").value);
+            input2 = Number(document.getElementById("input2").value);
+            calculate(input1,input2,"multiply")
+        }
+        BUTTON_DIVIDE.onclick = function (){
+            input1 = Number(document.getElementById("input1").value);
+            input2 = Number(document.getElementById("input2").value);
+            calculate(input1,input2,"divide")
+        }
+        BUTTON_SUBTRACT.onclick = function (){
+            input1 = Number(document.getElementById("input1").value);
+            input2 = Number(document.getElementById("input2").value);
+            calculate(input1,input2,"subtract")
+        }
+        BUTTON_EMPTY.onclick = function () {
+            document.getElementById("output").innerHTML = "";
+        }
+
+        // PROGRAMMET //
+        function calculate(number1, number2, calculation){
+            if (calculation === "multiply"){
+                print (number1 * number2)
+            } else if (calculation === "add"){
+                print (number1 + number2)
+            } else if (calculation === "subtract"){
+                print (number1 - number2)
+            } else if (calculation === "divide"){
+                print (number1 / number2)
+            } 
+        }
+                
+        // FUNKTIONER //
+        function print(text){
+            OUTPUT.innerHTML += text;
+        }
+
+        function newLine(){
+            OUTPUT.innerHTML += "<br>";
+        }
+    </script>
+    
+</body>
