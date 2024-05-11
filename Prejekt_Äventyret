@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Äventyret</title>
     <style>
+        
         body {
-            font-family: 'Times New Roman', Times, serif;
-            
+            font-family: 'Times New Roman', Times, serif;         
             background-image: url('linus-sandvide-5DIFvVwe6wk-unsplash.jpg');
             background-size: cover;
             background-color: #f2ffff;
+
         }
 
         #container {
@@ -94,9 +95,79 @@
                 print ('With the light turned on you, you see a pathway infront of you..');
                 newLine ();
                 print ('Do you go "left" or "right');
+                gameLocation = 'exploreCaveEntrence';
        
             }
 
+            function leftCaveEntrance() {
+                clearOutput();
+                print ('You go down the left pathway, its getting smaller and more narrow as you get closer..');
+                newLine();
+                print ('Eventually you reach a big door, its locked but you can see through the cracks.. ');
+                newLine()
+                print ('On the other side of the door you see something shining, it looks like a big treasure chest..');
+                newLine()
+                print ('You have read enough fantasy novels to realize the chest must contain something valueable.. But where is the key?');
+                newLine()
+                print ('You realize you need to go "back" to find the key');
+                gameLocation = 'leftCaveEntrence';
+            
+            }   
+            
+            function wrongTurn() {
+                clearOutput();
+                print ('You are back where the pathway divided..');
+                newLine();
+                print ('This time you choose the "right" pathway.');
+                gameLocation = 'exploreCaveEntrence';
+            }
+
+            function rightCaveEntrance() {
+                clearOutput();
+                print ('test2');
+                newLine();
+                print ('test2');
+                newLine()
+                print ('test2');
+            }
+
+            function aaaa() {
+                clearOutput();
+                print ('');
+                newLine();
+                print ('');
+                newLine()
+                print ('');
+            }
+
+            function aaaaaaa() {
+                clearOutput();
+                print ('');
+                newLine();
+                print ('');
+                newLine()
+                print ('');
+            }
+
+            function xxxxxxx() {
+                clearOutput();
+                print ('');
+                newLine();
+                print ('');
+                newLine()
+                print ('');
+            }
+
+            function xxxx() {
+                clearoutput();
+                print ('');
+                newLine();
+                print ('');
+                newLine()
+                print ('');
+            }
+
+            
 
             // FUNKTIONER INPUT/OUTPUT //
             function sendMessage() {
@@ -106,9 +177,16 @@
             inputElement.value = '';
             if (message === 'startgame') {
                 startGame();
-            } if (message === 'enter') {
+            } else if (message === 'enter') {
                 exploreCaveEntrence();
+            } else if (message === 'left' && gameLocation === 'exploreCaveEntrence') {
+                leftCaveEntrance();
+            } else if (message === 'back' && gameLocation === 'leftCaveEntrence') {
+                wrongTurn();
+            }  else if (message === 'right' && gameLocation === 'exploreCaveEntrence') {
+                rightCaveEntrance();
             }
+
         
             }
 
@@ -127,6 +205,13 @@
                 OUTPUT = document.getElementById('output');
                 OUTPUT.innerHTML += "<br>";
             }
+
+            function newLineDelay() {
+                setTimeout(function() {
+                    newLine();
+                }, 1000);
+            }
+        
 
 
         </script>
