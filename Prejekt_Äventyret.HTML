@@ -297,10 +297,17 @@
                 throwDice();
             } else if (message === 'pick up') {
                 pickUpKey();
+            } else if (message === 'retreat to door') {
+                lockedDoorAgain();
+            } else if (message === 'continue') {
+                deadEnd();
+            } else if (message === 'return') {
+                lockedDoor();  
+            } else if (message === 'enter') {
+                dragonLair();
             }
-
-        
-            }
+            }  
+            
 
              // VERKTYG //
             function removePlaceholder() {
