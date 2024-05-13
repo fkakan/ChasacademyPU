@@ -67,8 +67,10 @@
         <script>
             document.getElementById("button").onclick=sendMessage;
             // GLOBALER //
-            gameLocation = ''; // lägg till denna funktion med ex (message === 'exploreCaveEntrence' && gameLocation = xxx) 
+            gameLocation = '';
             let foundLockedDoor=false;
+            let playerHealth = 20;
+            let dragonHealth = 30;
 
             function clearOutput (){
                 document.getElementById('output').innerHTML = '';
@@ -222,11 +224,12 @@
                 print('The door opens slowly and a rush of anticipation fills the air, beyond the treshold lies a dimly lit champer..')
                 newLine();
                 print ('With cautious steps, you decide to "enter"')
+                gameLocation = 'lockedDoor';
             }
 
             function lockedDoor() {
                 clearOutput();
-                print ('You go down the pathway, its getting smaller and more narrow as you get closer..');
+                print ('You are back where you started, this time you go down the left pathway, its getting smaller and more narrow as you get closer..');
                 newLine();
                 print ('Eventually you reach a big door, its locked but you can see through the cracks.. ');
                 newLine()
@@ -239,23 +242,113 @@
                 print('The door opens slowly and a rush of anticipation fills the air, beyond the treshold lies a dimly lit champer..')
                 newLine();
                 print ('With cautious steps, you decide to "enter"')
+                gameLocation = 'lockedDoor';
             }
 
             function dragonLair() {
                 clearOutput();
-                print ('');
+                print ('You enter the chamber slowly, the light from your phone is casting shadows on the ancient walls..');
                 newLine();
-                print ('');
+                print ('As you get closer to the middle of the champer, you hear the echoing slam of the heavy stone door behind you.');
                 newLine()
-                print ('');
+                print ('A rumble resonates from the shadows, followed by a deafening roar that chills you to the bone.');
+                newLine ();
+                print ('Emerging from the darkness, a Dragon reveals itself, its eyes gleaming hatred.');
+                newLine();
+                print('With adrenaline coursing through your veins, you realize there is only one path forward: to face the dragon in combat.');
+                newLine();
+                print('You have no option than to "fight" the dragon.');
             }
-            function fightDragon() {
+
+            function engageCombat() {
                 clearOutput();
-                print ('');
+                print ('As you stare into the eyes of the beast you start to think of your options..');
                 newLine();
-                print ('');
+                print ('Suddenly the dragon starts charging against you');
                 newLine()
-                print ('');
+                print('Quickly, you think of your options')
+                newLine()
+                print ('"1". Attack the dragon');
+                newLine ();
+                print('"2". Dodge its attack')
+                newLine()
+                print('"3". Counterattack')
+                newLine('')
+                print ('"4". Try and flee from the fight');
+                newLine();
+                print('Type the "number" of your desired action.')
+            }
+        
+            function playerAction(action) {
+                let playerRoll = Math.random();
+
+                switch (action) {
+                    case "1":
+                        if (playerRoll < 0.8) { 
+                            clearOutput();
+                            print('You strike the dragon with all your might!');
+                            dragonHealth -= 3;
+                    } else {
+                        clearOutput();
+                        print('Your attack misses the dragon!');
+                } 
+                        break;
+                    case "2":
+                        if (playerRoll < 0.95) {
+                            clearOutput();
+                            print('You swiftly dodge the dragons attack!');   
+                    } else {
+                        clearOutput();
+                        print('You attempt to dodge, but the dragons attack connects!');
+                } 
+                        break;
+                    case "3":
+                        if (playerRoll < 0.5) {
+                            clearOutput();
+                            print('You turn the dragons attack against it with a powerful counterstrike!');
+                            dragonHealth -= 5;
+                    } else {
+                            clearOutput();
+                            print('Your counterattack fails to find its mark!');
+                } 
+                        break;
+                    case "4":
+                        clearOutput();
+                        print('You realize fleeing is not an option!');
+                        newLine();
+                        print('As you run towards the door, you realize the key is on the other side.');
+                        newLine();
+                        print('The dragon catches up to you and unleashes a devastating attack!');
+                        newLine();
+                        print('The dragon has killed you! Game over.');
+                        // Lägg till så att draken dödar dig här
+                        break;
+
+                } 
+                if (dragonHealth <= 0) {
+                    clearOutput();
+                    print('You have defeated the dragon! Victory is yours!')
+                } else if (action !== "4") {
+                    dragonAttack();
+                }
+            }
+            function dragonAttack() {
+                let dragonRoll = Math.random();
+                if (dragonRoll < 0.8) { 
+                    clearOutput();
+                    print('The dragon strikes you with its mighty claws!');
+                    playerHealth -= 4;
+                    } else {
+                    print('You manage to evade the dragons attack!');
+                    } 
+                checkPlayerHealth(playerHealth);
+            }
+        
+            function checkPlayerHealth(playerHealth) {
+                if (playerHealth <= 0) {
+                    clearOutput();
+                    print('The dragon has defeated you! Game over.');
+                 }
             }
 
             function lootTreasure() {
@@ -270,43 +363,49 @@
 
 
 
-
+           
             
 
             // FUNKTIONER INPUT/OUTPUT //
             function sendMessage() {
-            let inputElement = document.getElementById('input');
-            let outputElement = document.getElementById('output');
-            let message = inputElement.value;
-            inputElement.value = '';
-            if (message === 'startgame') {
-                startGame();
-            } else if (message === 'enter') {
-                exploreCaveEntrence();
-            } else if (message === 'left' && gameLocation === 'exploreCaveEntrence') {
-                leftCaveEntrance();
-            } else if (message === 'back' && gameLocation === 'leftCaveEntrence') {
-                wrongTurn();
-            }  else if (message === 'right' && gameLocation === 'exploreCaveEntrence') {
-                rightCaveEntrance();
-            } else if (message === 'approach') {
-                approachDice();
-            } else if (message === 'throw dice') {
-                throwDice();
-            } else if (message === 'throw dice again') {
-                throwDice();
-            } else if (message === 'pick up') {
-                pickUpKey();
-            } else if (message === 'retreat to door') {
-                lockedDoorAgain();
-            } else if (message === 'continue') {
-                deadEnd();
-            } else if (message === 'return') {
-                lockedDoor();  
-            } else if (message === 'enter') {
-                dragonLair();
+                let inputElement = document.getElementById('input');
+                let outputElement = document.getElementById('output');
+                let message = inputElement.value;
+                inputElement.value = '';
+                if (message === 'startgame') {
+                    startGame();
+                } else if (message === 'enter' && gameLocation === 'lockedDoor') { 
+                    dragonLair();
+                } else if (message === 'enter') { 
+                    exploreCaveEntrence();
+                } else if (message === 'left' && gameLocation === 'exploreCaveEntrence') {
+                    leftCaveEntrance();
+                } else if (message === 'back' && gameLocation === 'leftCaveEntrence') {
+                    wrongTurn();
+                }  else if (message === 'right' && gameLocation === 'exploreCaveEntrence') {
+                    rightCaveEntrance();
+                } else if (message === 'approach') {
+                    approachDice();
+                } else if (message === 'throw dice') {
+                    throwDice();
+                } else if (message === 'throw dice again') {
+                    throwDice();
+                } else if (message === 'pick up') {
+                    pickUpKey();
+                } else if (message === 'retreat to door') {
+                    lockedDoorAgain();
+                } else if (message === 'continue') {
+                    deadEnd();
+                } else if (message === 'return') {
+                    lockedDoor();  
+                } else if (message === 'fight') {
+                    engageCombat();
+                } else if (message === "1" || message === "2" || message === "3" || message === "4") {
+                   playerAction(message); 
+                }
             }
-            }  
+
+              
             
 
              // VERKTYG //
