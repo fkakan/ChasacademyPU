@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Äventyret</title>
+    <style>
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;         
+            background-image: url('linus-sandvide-5DIFvVwe6wk-unsplash.jpg');
+            background-size: cover;
+            background-color: #f2ffff;
+
+        }
+
+        #container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #2e0e0e;
+            border-radius: 5px;
+            opacity: 0.5;
+        }
+
+        #output {
+            margin-bottom: 10px;
+            padding: 20px;
+            background-color: #fdfcfc;
+            border: 5px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+
+        #input {
+            width: calc(100% - 25px);
+            padding: 8px;
+            border: 5px solid #f6efef;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #515254;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;   
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+    <body>
+        <div id="container">
+        <div id="output"></div>
+        <input type="text" id="input"placeholder="Skriv 'startgame' för att börja ditt äventyr..."oninput="removePlaceholder()">   
+        <button id="button">Skicka meddelande</button>
+        </div>
+        <script>
+            document.getElementById("button").onclick=sendMessage;
+            // GLOBALER //
+            gameLocation = '';
+            let foundLockedDoor=false;
+            let playerHealth = 20;
+            let dragonHealth = 30;
+
+            function clearOutput (){
+                document.getElementById('output').innerHTML = '';
+            }
+
+            // SPELET //
+            function startGame() {
+                print ('Welcome adventurer!');
+                newLine();
+                print ('You have been wandering for hours after finnishing your last class at Chasacademy...');
+                newLine();
+                print ('When you suddenly realize you are standing infront of a large cave..');
+                newLine()
+                print('The mouth of the cave yawns wide before you, its dark depths beckoning you to explore.');
+                newLine('');
+                print ('Do you dare to enter? Type "enter" if you want to continue the journey! ');
+                
+            }
+
+            function exploreCaveEntrence() {
+                clearOutput ();
+                print ('You cautiously enter the cave...');
+                newLine ();
+                print ('As you venture deeper, everything becomes darker..');
+                newLine ();
+                print ('Every step forward feels like a descent into the unknown, with the echoes of your footsteps reverberating you get scared..');
+                newLine()
+                print ('You which you had a torch, but then you realise you live in 2024 and turn on the flashlight on your phone.');
+                newLine ();
+                print ('With the light turned on you, you see a pathway dividing infront of you..');
+                newLine ();
+                print ('Do you go "left" or "right"');
+                gameLocation = 'exploreCaveEntrence';
+       
+            }
+
+            function leftCaveEntrance() {
+                clearOutput();
+                print ('You go down the left pathway, its getting smaller and more narrow as you get closer..');
+                newLine();
+                print ('Eventually you reach a big door, its locked but you can see through the cracks.. ');
+                newLine()
+                print ('On the other side of the door you see something shining, it looks like a big treasure chest..');
+                newLine()
+                print ('You have read enough fantasy novels to realize the chest must contain something valueable.. But where is the key?');
+                newLine()
+                print ('You realize you need to go "back" to find the key');
+                gameLocation = 'leftCaveEntrence';
+                foundLockedDoor = true;
+            }   
+            
+            function wrongTurn() {
+                clearOutput();
+                print ('You are back where the pathway divided..');
+                newLine();
+                print ('This time you choose the "right" pathway.');
+                gameLocation = 'exploreCaveEntrence';
+            }
+
+            function rightCaveEntrance() {
+                clearOutput();
+                print ('As you venture deeper into the caves, the air grows colder and the darkness more oppressive.');
+                newLine();
+                print ('Suddenly, your foot catches on a small bump in the ground, causing you to stumble forward and nearly lose your balance. ');
+                newLine();
+                print ('As you regain your footing, you find yourself standing before a mysterious chamber, its entrance guarded by an unusual sight: a single large dice');
+                newLine();
+                print ('Type "approach" to move towards the dice');
+            }
+
+            function approachDice() {
+                clearOutput();
+                print ('When you approach the diceyou see that each side is adorned with a numerical number, from one to six..');
+                newLine();
+                print ('It appears that the path forward lies in deciphering the rules of this dice game..');
+                newLine()
+                print ('It seems that rolling high may be the key to unlocking the secrets of the cavern..');
+                newLine ();
+                print ('Type "throw dice" to begin the puzzle')
+            }
+
+           function throwDice () {
+            let playerRoll = rollDice ();
+            print ('You rolled: '+ playerRoll);
+                if (playerRoll >= 4) {
+                    dropKey();
+                } else {
+                    clearOutput();
+                    print ('you rolled: '+ playerRoll +'.Type "throw dice again" to try again.');
+                }
+           }
+
+           function rollDice() {
+                return Math.floor(Math.random()*6)+1;
+            }
+            
+            function dropKey() {
+                    clearOutput();
+                    print ('You rolled high!');
+                    newLine();
+                    print('A faint click echoes through the chamber..');
+                    newLine();
+                    print('You look up just in time to see a key descending from the darkness above, landing softly at your feet.');
+                    newLine();
+                    print ('You reach down and "pick up" the key');
+            }
+
+            function pickUpKey() {
+                
+            if (foundLockedDoor === true) {
+                clearOutput();
+                print ('As you grasp the key, you feel its weight and notice the rusty material.');
+                newLine();
+                print ('Could this key be the long-lost counterpart to the door you stumbled upon earlier?');
+                newLine();
+                print ('With a determined heart, you retreat to the door, the key clutched tightly in your hand.')
+                newLine();
+                print ('Type "retreat to door" to go back')
+            } else if (foundLockedDoor === false) {
+                clearOutput();
+                print ('As you look upon the key in your hand, you sense its significance, a relic of untold stories waiting to be unveiled.');
+                newLine();
+                print ('Though its purpose remains a mystery for now, you know it holds the key to unlocking hidden truths within the depths of the cave.');
+                newLine()
+                print ('You decide to "continue" and venture further inside the cave..');
+            }
+            }
+            
+
+            function deadEnd() {
+                clearOutput();
+                print ('As you proceed further into the cave a sense of anticipation fills your heart.');
+                newLine();
+                print ('You navigate through winding corridors and mysterious chambers');
+                newLine()
+                print ('However, after what seems like an eternity of exploration, you reach a dead end.');
+                newLine()
+                print('Confusion clouds your mind as you realize there is nowhere else to go.')
+                newLine();
+                print('You realize you only option is to  retrace your steps and return to the beginning of your journey.');
+                newLine();
+                print('Type "return" to retrace your steps')
+            }
+
+            function lockedDoorAgain() {
+                clearOutput();
+                print ('Once again youre back at the ancient barrier..');
+                newLine();
+                print ('As you approach the door, you feel a faint whisper of magic in the air, guiding your hand to the keyhole.');
+                newLine()
+                print ('With a gentle turn, the key finds its rightful place, fitting snugly into the weathered lock, as if drawn by an unseen force.');
+                newLine();
+                print('The door opens slowly and a rush of anticipation fills the air, beyond the treshold lies a dimly lit champer..')
+                newLine();
+                print ('With cautious steps, you decide to "enter"')
+                gameLocation = 'lockedDoor';
+            }
+
+            function lockedDoor() {
+                clearOutput();
+                print ('You are back where you started, this time you go down the left pathway, its getting smaller and more narrow as you get closer..');
+                newLine();
+                print ('Eventually you reach a big door, its locked but you can see through the cracks.. ');
+                newLine()
+                print ('On the other side of the door you see something shining, it looks like a big treasure chest..');
+                newLine();
+                print ('As you approach the door, you feel a faint whisper of magic in the air, guiding your hand to the keyhole.');
+                newLine()
+                print ('With a gentle turn, the key finds its rightful place, fitting snugly into the weathered lock, as if drawn by an unseen force.');
+                newLine();
+                print('The door opens slowly and a rush of anticipation fills the air, beyond the treshold lies a dimly lit champer..')
+                newLine();
+                print ('With cautious steps, you decide to "enter"')
+                gameLocation = 'lockedDoor';
+            }
+
+            function dragonLair() {
+                clearOutput();
+                print ('You enter the chamber slowly, the light from your phone is casting shadows on the ancient walls..');
+                newLine();
+                print ('As you get closer to the middle of the champer, you hear the echoing slam of the heavy stone door behind you.');
+                newLine()
+                print ('A rumble resonates from the shadows, followed by a deafening roar that chills you to the bone.');
+                newLine ();
+                print ('Emerging from the darkness, a Dragon reveals itself, its eyes gleaming hatred.');
+                newLine();
+                print('With adrenaline coursing through your veins, you realize there is only one path forward: to face the dragon in combat.');
+                newLine();
+                print('You have no option than to "fight" the dragon.');
+            }
+
+            function engageCombat() {
+                clearOutput();
+                print ('As you lock eyes with the dragon, your mind races through possible options..');
+                newLine();
+                print ('Without warning, the dragon lunges towards you!');
+                newLine()
+                print ('In the heat of the moment, the dice from your previous encounter begins to tremble and emit an glow from your pocket.');
+                newLine ();
+                print('Instinctively, you draw the dice, its strange energy pulsating in your hand.');
+                newLine();
+                print('With no other recourse, you roll the dice, bracing yourself for the unknown outcome.');
+                newLine();
+                print('Type the "roll dice" to start the encounter')
+            }
+        
+
+
+            //Drakfight//
+            function fight() {
+                let roll = rollDice();
+
+                switch (roll) {
+                    case 1:
+                        clearOutput();
+                        print('The dragon breathes fire, dealing 5 damage to you!');
+                        newLine();
+                        print('Type the "roll dice" fight for your life')
+                        playerHealth -= 5;
+                        break;
+                    case 2:
+                        clearOutput();
+                        print('The dragon claws at you, dealing 3 damage!');
+                        newLine();
+                        print('Type the "roll dice" fight for your life')
+                        playerHealth -= 3;
+                        break;
+                    case 3:
+                        clearOutput();
+                        print('You strike the dragon with your sword, dealing 4 damage!');
+                        newLine();
+                        print('Type the "roll dice" fight for your life')
+                        dragonHealth -= 4;
+                        break;
+                    case 4:
+                        clearOutput();
+                        print('You cast a powerful spell, dealing 6 damage to the dragon!');
+                        newLine();
+                        print('Type the "roll dice" fight for your life')
+                        dragonHealth -= 6;
+                        break;
+                    case 5:
+                        clearOutput();
+                        print('You dodge the dragon\'s attack and retaliate, dealing 2 damage!');
+                        newLine();
+                        print('Type the "roll dice" fight for your life')
+                        dragonHealth -= 2;
+                        break;
+                    case 6:
+                        clearOutput();
+                        print('The dragon roars in frustration, but you remain unscathed!');
+                        newLine();
+                        print('Type the "roll dice" fight for your life')
+                        break;
+                }
+                
+                announceHealth();
+
+                if (playerHealth <= 0) {          
+                    clearOutput();
+                    print('You have been defeated by the dragon! Game over.');
+                } else if (dragonHealth <= 0) {
+                    clearOutput();
+                    print ('With a final strike, the dragon falls, defeated by your courage and skill.');
+                    newLine();
+                    print ('The treasure gleams before you, a testament to your triumph in the face of danger.');
+                    newLine();
+                    print ('Congratulations, adventurer! The spoils of victory are now yours to claim.');
+                }
+            }
+
+
+            function announceHealth() {
+                newLine();
+                print('Player Health: ' + playerHealth);
+                newLine();
+                print('Dragon Health: ' + dragonHealth);
+                newLine();
+            }
+           
+            
+
+            // SPELETS GÅNG //
+            function sendMessage() {
+                let inputElement = document.getElementById('input');
+                let outputElement = document.getElementById('output');
+                let message = inputElement.value;
+                inputElement.value = '';
+                if (message === 'startgame') {
+                    startGame();
+                } else if (message === 'enter' && gameLocation === 'lockedDoor') { 
+                    dragonLair();
+                } else if (message === 'enter') { 
+                    exploreCaveEntrence();
+                } else if (message === 'left' && gameLocation === 'exploreCaveEntrence') {
+                    leftCaveEntrance();
+                } else if (message === 'back' && gameLocation === 'leftCaveEntrence') {
+                    wrongTurn();
+                }  else if (message === 'right' && gameLocation === 'exploreCaveEntrence') {
+                    rightCaveEntrance();
+                } else if (message === 'approach') {
+                    approachDice();
+                } else if (message === 'throw dice') {
+                    throwDice();
+                } else if (message === 'throw dice again') {
+                    throwDice();
+                } else if (message === 'pick up') {
+                    pickUpKey();
+                } else if (message === 'retreat to door') {
+                    lockedDoorAgain();
+                } else if (message === 'continue') {
+                    deadEnd();
+                } else if (message === 'return') {
+                    lockedDoor();  
+                } else if (message === 'fight') {
+                    engageCombat();
+                } else if (message === 'roll dice') {
+                   fight(); 
+                }
+            }
+
+              
+            
+
+             // VERKTYG //
+            function removePlaceholder() {
+            inputElement = document.getElementById('input');
+            inputElement.removeAttribute('placeholder');
+            }
+            
+            function print(text){
+                OUTPUT = document.getElementById('output');
+                OUTPUT.innerHTML += text;
+            }
+
+            function newLine(){
+                OUTPUT = document.getElementById('output');
+                OUTPUT.innerHTML += "<br>";
+            }     
+
+        </script>
+    </body>
+</html>
