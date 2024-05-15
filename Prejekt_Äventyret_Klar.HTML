@@ -87,10 +87,11 @@
                 print('The mouth of the cave yawns wide before you, its dark depths beckoning you to explore.');
                 newLine('');
                 print ('Do you dare to enter? Type "enter" if you want to continue the journey! ');
-                
+                gameLocation = 'startGame'
+
             }
 
-            function exploreCaveEntrence() {
+            function exploreCaveEntrance() {
                 clearOutput ();
                 print ('You cautiously enter the cave...');
                 newLine ();
@@ -103,7 +104,7 @@
                 print ('With the light turned on you, you see a pathway dividing infront of you..');
                 newLine ();
                 print ('Do you go "left" or "right"');
-                gameLocation = 'exploreCaveEntrence';
+                gameLocation = 'exploreCaveEntrance';
        
             }
 
@@ -118,7 +119,7 @@
                 print ('You have read enough fantasy novels to realize the chest must contain something valueable.. But where is the key?');
                 newLine()
                 print ('You realize you need to go "back" to find the key');
-                gameLocation = 'leftCaveEntrence';
+                gameLocation = 'leftCaveEntrance';
                 foundLockedDoor = true;
             }   
             
@@ -127,7 +128,7 @@
                 print ('You are back where the pathway divided..');
                 newLine();
                 print ('This time you choose the "right" pathway.');
-                gameLocation = 'exploreCaveEntrence';
+                gameLocation = 'wrongTurn';
             }
 
             function rightCaveEntrance() {
@@ -139,6 +140,7 @@
                 print ('As you regain your footing, you find yourself standing before a mysterious chamber, its entrance guarded by an unusual sight: a single large dice');
                 newLine();
                 print ('Type "approach" to move towards the dice');
+                gameLocation = 'rightCaveEntrance'
             }
 
             function approachDice() {
@@ -150,6 +152,8 @@
                 print ('It seems that rolling high may be the key to unlocking the secrets of the cavern..');
                 newLine ();
                 print ('Type "throw dice" to begin the puzzle')
+                gameLocation = 'approachDice'
+
             }
 
            function throwDice () {
@@ -176,6 +180,7 @@
                     print('You look up just in time to see a key descending from the darkness above, landing softly at your feet.');
                     newLine();
                     print ('You reach down and "pick up" the key');
+                    gameLocation = 'dropKey'
             }
 
             function pickUpKey() {
@@ -189,6 +194,8 @@
                 print ('With a determined heart, you retreat to the door, the key clutched tightly in your hand.')
                 newLine();
                 print ('Type "retreat to door" to go back')
+                gameLocation = 'pickUpKey'
+
             } else if (foundLockedDoor === false) {
                 clearOutput();
                 print ('As you look upon the key in your hand, you sense its significance, a relic of untold stories waiting to be unveiled.');
@@ -196,6 +203,7 @@
                 print ('Though its purpose remains a mystery for now, you know it holds the key to unlocking hidden truths within the depths of the cave.');
                 newLine()
                 print ('You decide to "continue" and venture further inside the cave..');
+                gameLocation = 'pickUpKey'
             }
             }
             
@@ -213,6 +221,7 @@
                 print('You realize you only option is to  retrace your steps and return to the beginning of your journey.');
                 newLine();
                 print('Type "return" to retrace your steps')
+                gameLocation = 'deadEnd'
             }
 
             function lockedDoorAgain() {
@@ -226,7 +235,7 @@
                 print('The door opens slowly and a rush of anticipation fills the air, beyond the treshold lies a dimly lit champer..')
                 newLine();
                 print ('With cautious steps, you decide to "enter"')
-                gameLocation = 'lockedDoor';
+                gameLocation = 'lockedDoorAgain';
             }
 
             function lockedDoor() {
@@ -260,6 +269,7 @@
                 print('With adrenaline coursing through your veins, you realize there is only one path forward: to face the dragon in combat.');
                 newLine();
                 print('You have no option than to "fight" the dragon.');
+                gameLocation = 'dragonLair'
             }
 
             function engageCombat() {
@@ -275,6 +285,7 @@
                 print('With no other recourse, you roll the dice, bracing yourself for the unknown outcome.');
                 newLine();
                 print('Type the "roll dice" to start the encounter')
+                gameLocation = 'engageCombat'
             }
         
 
@@ -300,28 +311,28 @@
                         break;
                     case 3:
                         clearOutput();
-                        print('You strike the dragon with your sword, dealing 4 damage!');
+                        print('You strike the dragon with your fist, dealing 4 damage!');
                         newLine();
                         print('Type the "roll dice" fight for your life')
                         dragonHealth -= 4;
                         break;
                     case 4:
                         clearOutput();
-                        print('You cast a powerful spell, dealing 6 damage to the dragon!');
+                        print('You cast a powerful bitchslap, dealing 6 damage to the dragon!');
                         newLine();
                         print('Type the "roll dice" fight for your life')
                         dragonHealth -= 6;
                         break;
                     case 5:
                         clearOutput();
-                        print('You dodge the dragon\'s attack and retaliate, dealing 2 damage!');
+                        print('You dodge the dragonss attack and retaliate, dealing 2 damage!');
                         newLine();
                         print('Type the "roll dice" fight for your life')
                         dragonHealth -= 2;
                         break;
                     case 6:
                         clearOutput();
-                        print('The dragon roars in frustration, but you remain unscathed!');
+                        print('The dragon roars in frustration, but you remain calm!');
                         newLine();
                         print('Type the "roll dice" fight for your life')
                         break;
@@ -361,33 +372,33 @@
                 inputElement.value = '';
                 if (message === 'startgame') {
                     startGame();
-                } else if (message === 'enter' && gameLocation === 'lockedDoor') { 
+                } else if (message === 'enter' && (gameLocation === 'lockedDoor' || gameLocation === 'lockedDoorAgain' )) { 
                     dragonLair();
-                } else if (message === 'enter') { 
-                    exploreCaveEntrence();
-                } else if (message === 'left' && gameLocation === 'exploreCaveEntrence') {
+                } else if (message === 'enter' && gameLocation === 'startGame') { 
+                    exploreCaveEntrance();
+                } else if (message === 'left' && gameLocation === 'exploreCaveEntrance') {
                     leftCaveEntrance();
-                } else if (message === 'back' && gameLocation === 'leftCaveEntrence') {
+                } else if (message === 'back' && gameLocation === 'leftCaveEntrance') {
                     wrongTurn();
-                }  else if (message === 'right' && gameLocation === 'exploreCaveEntrence') {
+                }  else if (message === 'right' && (gameLocation === 'exploreCaveEntrance' || gameLocation === 'wrongTurn')) {
                     rightCaveEntrance();
-                } else if (message === 'approach') {
+                } else if (message === 'approach' && gameLocation === 'rightCaveEntrance') {
                     approachDice();
-                } else if (message === 'throw dice') {
+                } else if (message === 'throw dice' && gameLocation === 'approachDice') {
                     throwDice();
-                } else if (message === 'throw dice again') {
+                } else if (message === 'throw dice again' && gameLocation === 'approachDice') {
                     throwDice();
-                } else if (message === 'pick up') {
+                } else if (message === 'pick up' && gameLocation === 'dropKey') {
                     pickUpKey();
-                } else if (message === 'retreat to door') {
+                } else if (message === 'retreat to door' && gameLocation === 'pickUpKey') {
                     lockedDoorAgain();
-                } else if (message === 'continue') {
+                } else if (message === 'continue' && gameLocation === 'pickUpKey') {
                     deadEnd();
-                } else if (message === 'return') {
+                } else if (message === 'return' && gameLocation === 'deadEnd') {
                     lockedDoor();  
-                } else if (message === 'fight') {
+                } else if (message === 'fight' && gameLocation === 'dragonLair') {
                     engageCombat();
-                } else if (message === 'roll dice') {
+                } else if (message === 'roll dice' && gameLocation === 'engageCombat') {
                    fight(); 
                 }
             }
